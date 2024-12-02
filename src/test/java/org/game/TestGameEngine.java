@@ -2,8 +2,8 @@ package org.game;
 
 import static org.game.GameResources.PLAYER1;
 
-import org.game.players.ComputerPlayer;
-import org.game.players.HumanPlayer;
+import org.game.inputhandlers.InputHandlerFactory;
+import org.game.players.Participant;
 import org.game.players.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.game.inputhandlers.GameConsoleInputHandler;
+import org.game.inputhandlers.InterActiveInputHandler;
 import org.game.inputhandlers.InputHandler;
 
 /**
@@ -32,9 +32,8 @@ public class TestGameEngine {
 	 */
 	@Test
 	public void test_GameEngine() {
-		BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in));
-		InputHandler inputHandler = new GameConsoleInputHandler(userInputReader);
-		Player humanPlayer = new HumanPlayer(inputHandler) {
+
+		Player humanPlayer = new Participant(InputHandlerFactory.createInteractiveInputHandler()) {
 			@Override
 			public int selectNumberOfGames() {
 				return numberOfGames;
@@ -46,7 +45,7 @@ public class TestGameEngine {
 			}
 		};
 
-		Player computerPlayer = new ComputerPlayer() {
+		Player computerPlayer = new Participant(InputHandlerFactory.createRandomizedInputHandler()) {
 			@Override
 			public int selectNumberOfGames() {
 				return numberOfGames;

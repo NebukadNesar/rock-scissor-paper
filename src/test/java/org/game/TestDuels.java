@@ -11,7 +11,7 @@ public class TestDuels {
 	 */
 	@Test
 	public void test_DuelsFindById() {
-		int[] randomDuelsIds = { 1, 2, 3, 1, 0, 4, 1 };
+		int[] randomDuelsIds = { 1, 2, 1, 1, 1, 1, 1 };
 		boolean[] expectedOutComeOfResult = { true, true, true, true, true, true, true };
 
 		int testInputCount = randomDuelsIds.length;

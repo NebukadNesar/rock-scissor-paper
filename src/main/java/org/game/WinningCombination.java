@@ -6,12 +6,9 @@ import java.util.Set;
 public class WinningCombination {
 
 	private static final Map<Duels, Set<Duels>> winningCombinations = Map.of(
-			Duels.Rock, Set.of(Duels.Scissor, Duels.Lizard), // Rock crushes Scissors and Lizard
-			Duels.Scissor, Set.of(Duels.Paper, Duels.Lizard), // Scissors cuts Paper and decapitates Lizard
-			Duels.Paper, Set.of(Duels.Rock, Duels.Spock), // Paper covers Rock and disproves Spock
-			Duels.Lizard, Set.of(Duels.Paper, Duels.Spock), // Lizard poisons Paper and eats Spock
-			Duels.Spock, Set.of(Duels.Scissor, Duels.Rock) // Spock smashes Scissors and vaporizes Rock
-	);
+			Duels.Rock, Set.of(Duels.Scissor),
+			Duels.Scissor, Set.of(Duels.Paper),
+			Duels.Paper, Set.of(Duels.Rock));
 
 	/**
 	 * Checks if player1's duel beats player2's duel.

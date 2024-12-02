@@ -1,6 +1,7 @@
 package org.game;
 
-import org.game.players.HumanPlayer;
+import org.game.inputhandlers.InputHandlerFactory;
+import org.game.players.Participant;
 import org.game.players.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.game.inputhandlers.GameConsoleInputHandler;
+import org.game.inputhandlers.InterActiveInputHandler;
 import org.game.inputhandlers.InputHandler;
 
 public class TestHumanPlayer {
@@ -21,19 +22,19 @@ public class TestHumanPlayer {
 	public void test_HumanPlayerGameSelection() {
 		int numberOfGame = 1;
 		BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in));
-		InputHandler inputHandler = new GameConsoleInputHandler(userInputReader) {
+		InputHandler inputHandler = new InterActiveInputHandler(userInputReader) {
 			@Override
 			public int readNumberOfGame() {
 				return numberOfGame;
 			}
 
 			@Override
-			public String readDuelOfRound() {
-				return "incorrect duel choice";
+			public Duels readDuelOfRound() {
+				return null;
 			}
 		};
 
-		Player humanPlayer = new HumanPlayer(inputHandler);
+		Player humanPlayer = new Participant(inputHandler);
 		int humanSelectNumberOfGame = humanPlayer.selectNumberOfGames();
 		Assertions.assertEquals(numberOfGame, humanSelectNumberOfGame, "Human player did not select number of game correctly!");
 	}
@@ -61,19 +62,23 @@ public class TestHumanPlayer {
 	private static Player getHumanPlayer(String[] humanPLayerDuelsSelections) {
 		AtomicInteger playerInputIndex = new AtomicInteger(0);
 		BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in));
-		InputHandler inputHandler = new GameConsoleInputHandler(userInputReader) {
+		InputHandler inputHandler = new InterActiveInputHandler(userInputReader) {
 			@Override
 			public int readNumberOfGame() {
 				return humanPLayerDuelsSelections.length;
 			}
 
 			@Override
-			public String readDuelOfRound() {
+			public Duels readDuelOfRound() {
 				String selection = humanPLayerDuelsSelections[playerInputIndex.getAndIncrement()];
-				return selection == null ? null : selection.toLowerCase();
+				try {
+					return Duels.valueOf(selection);
+				} catch (Exception e) {
+					return null;
+				}
 			}
 		};
 
-		return new HumanPlayer(inputHandler);
+		return new Participant(inputHandler);
 	}
 }

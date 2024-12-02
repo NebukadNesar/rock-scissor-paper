@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.game.inputhandlers.GameConsoleInputHandler;
+import org.game.inputhandlers.InterActiveInputHandler;
 import org.game.inputhandlers.InputHandler;
 
 public class TestInputHandler {
@@ -28,7 +28,7 @@ public class TestInputHandler {
 				return userInputs[inputIndex.getAndIncrement()];
 			}
 		};
-		InputHandler inputHandler = new GameConsoleInputHandler(userInputReader);
+		InputHandler inputHandler = new InterActiveInputHandler(userInputReader);
 		int selectedNumberOfGames = inputHandler.readNumberOfGame();
 
 		Assertions.assertEquals(validInputForNumberOfGames, selectedNumberOfGames, "Console input reader cannot handle user inputs correctly!");
@@ -51,14 +51,13 @@ public class TestInputHandler {
 			}
 		};
 
-		InputHandler inputHandler = new GameConsoleInputHandler(userInputReader);
+		InputHandler inputHandler = new InterActiveInputHandler(userInputReader);
 		int numberOfInputs4test = userInputs.length;
 		boolean[] actualOutcomeOfInputs = new boolean[numberOfInputs4test];
 
 		for (int i = 0; i < numberOfInputs4test; i++) {
-			String duelOfRound = inputHandler.readDuelOfRound();
-			Duels duelForRound = Duels.findDuelByName(duelOfRound);
-			actualOutcomeOfInputs[i] = duelForRound != null;
+			Duels duelOfRound = inputHandler.readDuelOfRound();
+			actualOutcomeOfInputs[i] = duelOfRound != null;
 		}
 
 		Assertions.assertArrayEquals(expectedOutcomeOfInputs, actualOutcomeOfInputs, "Console input reader cannot handle user inputs correctly!");

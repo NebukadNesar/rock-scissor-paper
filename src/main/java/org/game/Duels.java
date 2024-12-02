@@ -3,9 +3,7 @@ package org.game;
 public enum Duels {
 	Rock("rock"),
 	Scissor("scissor"),
-	Paper("paper"),
-	Lizard("Lizard"),
-	Spock("Spock");
+	Paper("paper");
 
 	private final String name;
 
